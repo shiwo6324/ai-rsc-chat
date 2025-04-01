@@ -1,9 +1,9 @@
 import Image from "next/image";
-
+import { env } from "@/app/env.mjs";
 export default function Home() {
-  return (
-    <div>
-      <h1 >Hello World</h1>
-    </div>
-  );
+	const test = () => {
+		return "Hello";
+	};
+
+	return <div>1</div>;
 }
