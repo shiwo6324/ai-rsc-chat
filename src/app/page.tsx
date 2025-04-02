@@ -1,9 +1,12 @@
 import Image from "next/image";
 import { env } from "@/app/env.mjs";
+import ChatList from "./components/chat-list";
 export default function Home() {
-	const test = () => {
-		return "Hello";
-	};
-
-	return <div>1</div>;
+	return (
+		<main>
+			<div className="pb-[200px] pt-4 md:pt-10">
+				<ChatList messages={[]} />
+			</div>
+		</main>
+	);
 }
