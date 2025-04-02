@@ -55,7 +55,7 @@ const ChatScrollAchor = () => {
 		// }
 
 		// 按照原始代码的逻辑 (虽然可能无效)
-		if (isAtBottom && inView && !inView) {
+		if (isAtBottom && !inView) {
 			// 获取到被 ref 引用的 DOM 元素 (即下面的 div)
 			// 调用 scrollIntoView 方法将元素滚动到视口中
 			entry?.target.scrollIntoView({
