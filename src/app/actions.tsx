@@ -31,6 +31,12 @@ If the user wants to do anything else, it is an impossible task, so you should r
 Besides getting prices of cryptocurrencies, you can also chat with users.
 `;
 
-export const sendMessage = async (input: string): Promise<ClientMessage> => {
-	"use server";
+export const sendMessage = async (
+	message: string,
+): Promise<{ id: string; role: "user" | "assistant"; display: ReactNode }> => {
+	return {
+		id: crypto.randomUUID(),
+		role: "assistant",
+		display: <div>hello</div>,
+	};
 };

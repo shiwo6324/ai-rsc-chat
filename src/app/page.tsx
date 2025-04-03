@@ -1,28 +1,56 @@
 "use client";
 import ChatList from "@/components/chat-list";
 import ChatScrollAnchor from "@/components/chat-scroll-anchor";
-import { useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { useEnterSubmit } from "@/lib/use-enter-submit";
 import TextareaAutosize from "react-textarea-autosize";
 import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
+import { z } from "zod";
+import { useActions, useUIState } from "ai/rsc";
+import type { AI } from "./ai";
+import type { ClientMessage } from "./actions";
+import { AssistantMessage, UserMessage } from "./components/llm/message";
 
-interface FormData {
-	message: string;
-}
+const chatSchema = z.object({
+	message: z.string().min(1, { message: "消息不能为空" }),
+});
+
+export type ChatInput = z.infer<typeof chatSchema>;
 
 export default function Home() {
-	const form = useForm<FormData>();
+	const form = useForm<ChatInput>();
 	const { formRef, onKeyDown } = useEnterSubmit();
-	const onSubmit = (data: FormData) => {
-		console.log(data);
+	const [messages, setMessages] = useUIState<typeof AI>();
+
+	const { sendMessage } = useActions<typeof AI>();
+
+	const onSubmit: SubmitHandler<ChatInput> = async (data: ChatInput) => {
+		const value = data.message.trim();
 		form.reset();
+		if (value === "") return;
+
+		setMessages((currentMessages) => [
+			...currentMessages,
+			{
+				id: crypto.randomUUID(),
+				role: "user",
+				display: <UserMessage>{value}</UserMessage>,
+			},
+		]);
+
+		try {
+			const responseMessage = await sendMessage(value);
+			setMessages((currentMessages) => [...currentMessages, responseMessage]);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	return (
 		<main className="flex flex-col h-screen bg-muted/50">
 			<div className="flex-1 overflow-y-auto p-4 md:p-6">
 				<div className="max-w-2xl mx-auto">
-					<ChatList messages={[]} />
+					<ChatList messages={messages} />
 					<ChatScrollAnchor />
 				</div>
 			</div>
