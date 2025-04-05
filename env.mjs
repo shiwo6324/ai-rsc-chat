@@ -9,7 +9,9 @@ export const env = createEnv({
 	 */
 	server: {
 		// DATABASE_URL: z.string().url(),
-		OPEN_AI_API_KEY: z.string().min(1),
+		OPENAI_API_KEY: z.string(),
+		OPENAI_BASE_URL: z.string(),
+		CMC_API_KEY: z.string(),
 	},
 	/*
 	 * Environment variables available on the client (and server).
@@ -26,9 +28,8 @@ export const env = createEnv({
 	 * 💡 You'll get type errors if not all variables from `server` & `client` are included here.
 	 */
 	runtimeEnv: {
-		// DATABASE_URL: process.env.DATABASE_URL,
-		OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
-		// NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
-		// 	process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+		OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+		OPENAI_BASE_URL: process.env.OPENAI_BASE_URL,
+		CMC_API_KEY: process.env.CMC_API_KEY,
 	},
 });

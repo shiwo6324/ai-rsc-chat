@@ -10,7 +10,9 @@ export const UserMessage = ({ children }: { children: React.ReactNode }) => {
 	);
 };
 
-export const BotMessage = ({ children }: { children: React.ReactNode }) => {
+export const BotMessage = ({
+	children,
+}: { children: React.ReactNode; showAvatar?: boolean }) => {
 	return (
 		<div>
 			<BotIcon />
@@ -22,7 +24,7 @@ export const BotMessage = ({ children }: { children: React.ReactNode }) => {
 export const BotCard = ({
 	children,
 	showAvatar = true,
-}: { children: React.ReactNode; showAvatar: boolean }) => {
+}: { children: React.ReactNode; showAvatar?: boolean }) => {
 	return (
 		<div className="group relative flex items-center md:-ml-12">
 			<div
