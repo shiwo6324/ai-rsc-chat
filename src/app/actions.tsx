@@ -153,7 +153,7 @@ export const sendMessage = async (
 						},
 					});
 					if (!response.ok) {
-						history.update([
+						history.done([
 							...history.get(),
 							{
 								role: "assistant",
